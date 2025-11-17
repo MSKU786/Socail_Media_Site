@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+{% load static %}
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -45,10 +47,11 @@
           {% else %}
           <li><a href="#"> Groups</a></li>
           <li><a href="{% url 'accounts:login' %}"> Log In</a></li>
-          <li><a href="{% url 'accounts:Signup' %}"> Sign Up</a></li>
+          <li><a href="{% url 'accounts:signup' %}"> Sign Up</a></li>
+          {% endif %}
         </ul>
       </div>
     </nav>
-    <div class="contianer my-container">{% block content %} {% content %}</div>
+    <div class="contianer my-container">{% block content %} {% endblock %}</div>
   </body>
 </html>
