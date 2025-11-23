@@ -9,6 +9,24 @@
     class="btn btn-lg btn-fill btn-warning"
     >Leave group</a
   >
+  {% else %}
+  <a
+    href="{% url 'group:leave' %}"
+    class="btn btn-lg btn-fill btn-warning"
+    >Leave group</a
+  >
   {% endif %}
+</div>
+{% endblock %} {% block group_content%}
+<div class="col-md-8">
+  {% if group.posts .count === 0 %}
+  <h2>No Posts are avaiable in this group</h2>
+  {% else %}
+  <br />
+  {% for post in group.posts.all %} {% include "posts/_post.html"%}
+  <br />
+  {% endfor %}
+  <br />
+  {% endif%}
 </div>
 {% endblock %}
