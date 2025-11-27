@@ -33,3 +33,37 @@ class UserPost(generic.ListVIew):
     context = super().get_context_data(**kwargs)
     const['post_user'] = self.post_user
     return context
+
+class PostDetail(SelectRelatedMixin, generic.DetailView):
+  model = models.Post
+  select_related = ('user', 'group')
+
+  def get_queryset(self):
+    queryset = super().get_queryset()
+    return queryset.filter(user__username__iexact=self.kwargs.get('username'))
+
+
+class CreatePost(LoginRequiredMixin, SelectRelatedMixin, generic.CreateView):
+
+  fields = ('message', 'group')
+  model = models.Post
+   
+  def form_valid(self, form):
+    self.object = form.save(commit=False)
+    self.object.user = self.request.user
+    self.object.save()
+    return super().form_valid(form)
+
+
+class DeletePost(LoginRequiredMixin, SelectRelatedMixin, generic.DetailView):
+  model = models.Post
+  select_related = ('user', 'group')
+  success_url = reverse_lazy('posts:all')
+
+  def get_queryset(self):
+    queryset = super().get_queryset()
+    return queryset.filter(user_id = self.request.user.id)
+  
+  def delete(self, *args, **kwargs):
+    message.success(self.request, 'Post Deleted')
+    return super().delete(*args, **kwargs)
