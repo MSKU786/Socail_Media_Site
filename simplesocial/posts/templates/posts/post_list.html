@@ -1,0 +1,40 @@
+{% extends "posts/post_base.html" %} {% block post_content %}
+<div class="col-md-8">
+  {% if user.is_authenticated %}
+  <div class="card card-with-shadow">
+    <div class="content">
+      <h5 class="title list-group-item-heading">Your Groupss</h5>
+      <ul class="list-group">
+        {% for member_group in get_user_groups %}
+        <li class="list-group-item">
+          <a href="{% url 'groups:single' slug=member_group.group.slug %}"
+            >{{member_group.group.name}}</a
+          >
+        </li>
+        {%endfor}
+      </ul>
+    </div>
+  </div>
+  {% endif %}
+  <div class="card card-with-shadow">
+    <div class="content">
+      <h5 class="title list-group-item-heading">All Groups</h5>
+      <ul class="list-group">
+        {% for other_group in get_other_groups %}
+        <li class="list-group-item">
+          <a href="{% url 'groups:single' slug=other_group.slug %}"
+            >{{other_group.name}}</a
+          >
+        </li>
+        {%endfor}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}
+<br />
+{% block post_content %}
+<div class="col-md-8">
+  {% for post in post_list %} {% include "posts/_post.html" %} {% endfor %}
+</div>
+{% endblock %}
