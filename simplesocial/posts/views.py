@@ -1,11 +1,14 @@
 from django.shortcuts import render
-from django.contrib.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 # Create your views here.
 
 from django.http import Http404
 from django.views import generic
 
-from braces.views import SelectRelatedMixin
+from braces.views import SelectRelatedMixin, LoginRequiredMixin
+from django.contrib import messages
+from django.urls import reverse_lazy
+from django.http import Http404 
 from . import models
 from . import forms
 
@@ -15,10 +18,10 @@ User = get_user_model()
 
 class PostList(SelectRelatedMixin, generic.ListView):
   model = models.Post
-  select_group = ('user', 'group')
+  select_related = ('user', 'group')
 
-class UserPost(generic.ListVIew):
-  model = model.Post
+class UserPost(generic.ListView):
+  model = models.Post
   template_name = 'posts/user_post_list.html'
 
   def get_queryset(self):

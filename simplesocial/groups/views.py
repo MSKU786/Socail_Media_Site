@@ -1,8 +1,8 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.core.urlresolvers import reverse
+from braces.views import LoginRequiredMixin, PermissionRequiredMixin
+from django.urls import reverse
 from django.views import generic
 from django.shortcuts import get_object_or_404
 from django.db import IntegrityError
@@ -10,8 +10,8 @@ from django.contrib import messages
 from groups.models import Group,GroupMember
 
 class CreateGroup(LoginRequiredMixin, generic.CreateView):
-  fileds = ('name', 'description')
-  model = Group
+    fields = ('name', 'description')
+    model = Group
 
 class SingleGroup(generic.DetailView):
   model = Group
