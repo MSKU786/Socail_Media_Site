@@ -26,7 +26,7 @@ class Group(models.Model):
     super().save(*args, **kwargs)
 
   def get_absolute_url(self):
-    return reverse('group:single', kwargs:{'slug': self.slug})
+    return reverse('group:single', kwargs={'slug': self.slug})
 
   class Meta:
     ordering = ['name']
@@ -34,8 +34,8 @@ class Group(models.Model):
 
 
 class GroupMember(models.Model):
-  group = models.ForeignKey(Group, related_name='Memberships')
-  user = models.ForeignKey(User, related_name='user_groups')
+  group = models.ForeignKey(Group, related_name='memberships', on_delete=models.CASCADE)
+  user = models.ForeignKey(User, related_name='user_groups', on_delete=models.CASCADE)
 
   def __str__(self):
     return self.user.username

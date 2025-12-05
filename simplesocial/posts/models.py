@@ -1,21 +1,21 @@
 from django.db import models
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.conf import settings
 # Create your models here.
 
 import markdown
 
-from group.models import Group
+from groups.models import Group
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class Post(models.Model):
-  user = models.ForeignKey(User, related_name='posts')
-  created_at = models.DateTimeField(auto_now-True)
+  user = models.ForeignKey(User, related_name='posts', on_delete=models.CASCADE)
+  created_at = models.DateTimeField(auto_now_add=True)
   message = models.TextField()
-  message_html = models.TextField(editable=Field)
-  group = models.ForeignKey(Group, related_name='posts',null=True, blank=True)
+  message_html = models.TextField(editable=False)
+  group = models.ForeignKey(Group, related_name='posts',null=True, blank=True, on_delete=models.CASCADE)
 
 
   def __str__(self):
@@ -26,7 +26,7 @@ class Post(models.Model):
     super().save(*args, **kwargs)
 
   def get_absolute_url(self):
-    return reverse('post:single', kwargs:{'username': self.user.username, 'pk': self.pk})
+    return reverse('posts:single', kwargs={'username': self.user.username, 'pk': self.pk})
 
   class Meta:
     ordering = ['-created_at']
