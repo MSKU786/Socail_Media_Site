@@ -1,9 +1,9 @@
-{% extends 'groups/group_base.html '%} {% block pregroup %}
+{% extends 'groups/group_base.html' %} {% block pregroup %}
 <div class="col-md-4">
   <div class="content">
     {% if user.is_authenticated %}
     <h2>
-      Welcoeme back!
+      Welcome back!
       <a href="{% url 'posts:for_user' username=user.username %}">
         @{{user.username}}
       </a>
@@ -18,14 +18,15 @@
     class="btn btn-md btn-fill btn-warning"
     >Create New Group</a
   >
+  {% endif %}
 </div>
-{% endblock %}
+
 <br />
 
-{% block group_content %}
+{% endblock %} {% block group_content %}
 <div class="col-md-8">
   <div class="list-group">
-    {% for group in object_list }
+    {% for group in object_list %}
     <a
       class="list-group-item"
       href="{% url 'groups:single' slug=group.slug %}"
@@ -36,11 +37,11 @@
         <div class="row">
           <div class="col-md-4">
             <span class="badge">{{group.members.count}}</span>
-            Member: {{group.members.count|pluralize}}
+            Member{{group.members.count|pluralize}}
           </div>
           <div class="col-md-4">
             <span class="badge">{{group.posts.count}}</span>
-            Posts: {{group.posts.count|pluralize}}
+            Post{{group.posts.count|pluralize}}
           </div>
         </div>
       </div>
@@ -48,3 +49,4 @@
     {% endfor %}
   </div>
 </div>
+{% endblock %}
