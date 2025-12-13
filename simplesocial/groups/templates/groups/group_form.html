@@ -6,7 +6,7 @@
 
 <form
   method="post"
-  action="% url 'groups:create' %"
+  action="{% url 'groups:create' %}"
   id="groupForm"
 >
   {% csrf_token %} {% bootstrap_form form%}

@@ -11,7 +11,7 @@
             >{{member_group.group.name}}</a
           >
         </li>
-        {%endfor}
+        {% endfor %}
       </ul>
     </div>
   </div>
@@ -26,15 +26,13 @@
             >{{other_group.name}}</a
           >
         </li>
-        {%endfor}
+        {% endfor %}
       </ul>
     </div>
   </div>
-</div>
-{% endblock %}
-<br />
-{% block post_content %}
-<div class="col-md-8">
-  {% for post in post_list %} {% include "posts/_post.html" %} {% endfor %}
+  <br />
+  <div class="col-md-8">
+    {% for post in post_list %} {% include "posts/_post.html" %} {% endfor %}
+  </div>
 </div>
 {% endblock %}
